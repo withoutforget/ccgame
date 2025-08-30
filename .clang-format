@@ -11,3 +11,6 @@ AlignTrailingComments: true
 AlignConsecutiveDeclarations: false
 BreakBeforeBraces: Attach
 AccessModifierOffset: -4
+
+IncludeBlocks: Regroup
+SortIncludes: true

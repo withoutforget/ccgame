@@ -6,18 +6,17 @@
 #include "../io/view.hpp"
 #include "../utils/context.hpp"
 
-
 class Model {
 protected:
-    Controller m_controller;
-    View m_view;
+    Controller& m_controller;
+    View& m_view;
     Context& m_context;
 
-protected:
+public:
     virtual void run(Context& context) = 0;
 
 public:
-    Model(Context& context, Controller controller, View view)
+    Model(Context& context, Controller& controller, View& view)
         : m_context(context), m_controller(controller), m_view(view) {}
 
     virtual void execute(Context& context) {
@@ -25,9 +24,11 @@ public:
             run(context);
         } catch (std::exception& e) {
             m_view.colored_output(ColorText::BRIGHT_RED, "Unhandled exception ({})\n", e.what());
+            throw;
 
         } catch (...) {
             m_view.colored_output(ColorText::BRIGHT_RED, "Unhandled exception\n");
+            throw;
         }
     };
 };

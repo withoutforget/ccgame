@@ -1,34 +1,14 @@
-#include <charconv>
-#include <exception>
-#include <format>
-#include <iostream>
-#include <limits>
-
-#include "io/color.hpp"
 #include "io/controller.hpp"
 #include "io/error.hpp"
-#include "io/view.hpp"
-
-#include "utils/context.hpp"
-#include "model/model.hpp"
-
-class SelectCountryModel : public Model {
-protected:
-    void run(Context& context) override {
-        m_view.colored_output(ColorText::BRIGHT_BLUE, "Hello, world!\n");
-        auto res = m_controller.get_string(2, 10);
-        m_view.colored_output(ColorText::BRIGHT_MAGENTA, "You entered: {}\n", res);
-    }
-
-public:
-    using Model::Model;
-};
+#include "model/menu/menu.hpp"
 
 int main() {
-    Context context{};
-    View view{};
-    Controller controller{};
+    Context context;
+    context.set("game_title", "CCGame");
+    context.set("first_time", "true");
 
-    SelectCountryModel model{context, controller, view};
-    model.execute(context);
+    Controller controller;
+    View view;
+    MenuModel menu_model(context, controller, view);
+    menu_model.execute(context);
 }
